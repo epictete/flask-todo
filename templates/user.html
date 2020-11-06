@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    User Account
+{% endblock %}
+
+{% block main %}
+
+    <div class="col-md-6 mx-auto">
+        <div class="card card-body bg-light mt-5">
+            <h2>Manage Your Account</h2>
+            <p>Please fill out this form to update your password</p>
+            <form action="/user/{{ session["user_id"] }}" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" value="{{ user["username"] }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="confirm">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirm" name="confirm">
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <input type="submit" value="Update" class="btn btn-primary btn-block">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

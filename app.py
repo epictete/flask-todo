@@ -315,9 +315,42 @@ def login():
         return redirect("/")
 
 
+@app.route("/user/<int:id>", methods=["GET", "POST"])
+@login_required
+def user(id):
+    user_to_update = User.query.get_or_404(id)
+
+    if request.method == "GET":
+        return render_template("user.html", user=user_to_update)
+    else:
+        username = request.form["username"]
+        password = request.form["password"]
+        confirm = request.form["confirm"]
+        hash = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
+
+        if not password or not confirm:
+            flash("Please fill in both fields")
+            return redirect(f"/user/{id}")
+        elif password != confirm:
+            flash("Passwords do not match")
+            return redirect(f"/user/{id}")
+
+        user_to_update.password = hash
+
+        try:
+            db.session.commit()
+            flash("Updated!")
+
+        except:
+            flash("An error occurred")
+
+        return redirect(f"/user/{id}")
+
+
 @app.route("/logout")
 def logout():
     session.pop('user_id', None)
+    flash("Goodbye!")
     return redirect("/")
 
 
