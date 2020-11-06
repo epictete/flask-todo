@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+
+    <div class="col-md-6 mx-auto">
+        <div class="card card-body bg-light mt-5">
+            <h2>Log In</h2>
+            <p>Please fill in your credentials to log in</p>
+            <form action="/login" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <input type="submit" value="Log In" class="btn btn-primary btn-block">
+                    </div>
+                    <div class="col">
+                        <a href="/register" class="btn btn-light btn-block">Register</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

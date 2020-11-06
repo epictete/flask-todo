@@ -1,0 +1,145 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block main %}
+
+    <div class="container">
+
+        <h1 class="text-center mb-5">Dashboard</h1>
+
+            <div class="card mb-5 bg-light">
+                <div class="card-body">
+                    <form action="/" method="post">
+                        <div class="form-row align-items-center">
+                            <div class="col-6 mr-2">
+                                <input
+                                        class="form-control"
+                                        type="text"
+                                        name="content"
+                                        placeholder="New Todo..."
+                                />
+                            </div>
+                            <div class="col-auto mr-2">
+                                <div class="form-check">
+                                    <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            name="important"
+                                            id="important"
+                                    />
+                                    <label class="form-check-label" for="important">
+                                        Important
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-auto mr-2">
+                                <div class="form-check">
+                                    <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            name="urgent"
+                                            id="urgent"
+                                    />
+                                    <label class="form-check-label" for="urgent">
+                                        Urgent
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-auto mr-2">
+                                <input type="date" name="due" placeholder="Due Date" >
+                            </div>
+                            <div class="col-auto mr-2">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        {% if not todos %}
+
+            <h4 class="text-center mb-5">Your Todo list is empty.  Enjoy!</h4>
+
+            <img src="{{ url_for("static", filename="relax.jpg") }}" class="img-fluid rounded mx-auto d-block mb-3" alt="Relax">
+
+            <p class="text-center">
+                <span>
+                    Photo by
+                    <a href="https://unsplash.com/@peterconlan?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank">Peter Conlan</a> on
+                    <a href="https://unsplash.com/s/photos/enthusiastic?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank">Unsplash</a>
+                </span>
+            </p>
+
+        {% else %}
+
+            <table class="table table-striped">
+                <tr>
+                    <th scope="col" class="col-6">
+                        {% if sort == "todo_asc" %}
+                            <a href="/sort/{{ "todo_desc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                        {% else %}
+                            <a href="/sort/{{ "todo_asc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                        {% endif %}
+                        Todo
+                    </th>
+                    <th scope="col">
+                        {% if sort == "due_asc" %}
+                            <a href="/sort/{{ "due_desc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                        {% else %}
+                            <a href="/sort/{{ "due_asc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                        {% endif %}
+                        Due
+                    </th>
+                    <th scope="col">
+                        {% if sort == "created_asc" %}
+                            <a href="/sort/{{ "created_desc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                        {% else %}
+                            <a href="/sort/{{ "created_asc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                        {% endif %}
+                        Created
+                    </th>
+                    <th scope="col" class="text-center">Done</th>
+                    <th scope="col" class="text-center">Edit</th>
+                    <th scope="col" class="text-center">Delete</th>
+                </tr>
+                {% for todo in todos %}
+                <tr>
+                    <td scope="row">
+                        {% if todo.important %}
+                            {% if todo.urgent %}
+                                <span class="badge badge-danger mr-1 text-danger">0</span>
+                            {% else %}
+                                <span class="badge badge-success mr-1 text-success">0</span>
+                            {% endif %}
+                        {% else %}
+                            {% if todo.urgent %}
+                                <span class="badge badge-warning mr-1 text-warning">0</span>
+                            {% else %}
+                                <span class="badge badge-primary mr-1 text-primary">0</span>
+                            {% endif %}
+                        {% endif %}
+                        {{ todo.content }}
+                    </td>
+                    <td>{{ todo.due }}</td>
+                    <td>{{ todo.created.date() }}</td>
+                    <td class="text-center">
+                        <a href="/done/{{ todo.id }}"><i class="far fa-square"></i></a>
+                    </td>
+                    <td class="text-center">
+                        <a href="/update/{{ todo.id }}"><i class="fas fa-edit"></i></a>
+                    </td>
+                    <td class="text-center">
+                        <a href="/delete/{{ todo.id }}"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+        {% endif %}
+
+    </div>
+
+{% endblock %}

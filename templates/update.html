@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Update Todo
+{% endblock %}
+
+{% block main %}
+
+    <div class="container">
+
+        <h1 class="text-center mb-5">Update</h1>
+
+        <div class="card mb-5 bg-light">
+            <div class="card-body">
+                <form action="/update/{{ todo.id }}" method="post">
+                    <div class="form-row align-items-center">
+                        <div class="col-6 mr-2">
+                            <input
+                                    class="form-control"
+                                    type="text"
+                                    name="content"
+                                    value="{{ todo.content }}"
+                            />
+                        </div>
+                        <div class="col-auto mr-2">
+                            <div class="form-check">
+                                <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="important"
+                                        id="important"
+                                        {% if todo.important %}checked{% endif %}
+                                />
+                                <label class="form-check-label" for="important">
+                                    Important
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-auto mr-2">
+                            <div class="form-check">
+                                <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="urgent"
+                                        id="urgent"
+                                        {% if todo.urgent %}checked{% endif %}
+                                />
+                                <label class="form-check-label" for="urgent">
+                                    Urgent
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-auto mr-2">
+                            <input type="date" name="due" value="{{ todo.due }}" >
+                        </div>
+                        <div class="col-auto mr-2">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

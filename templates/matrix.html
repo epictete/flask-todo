@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Matrix
+{% endblock %}
+
+{% block main %}
+
+    <div class="container">
+        <h1 class="text-center mb-2">The Eisenhower Matrix</h1>
+
+        <img src="{{ url_for("static", filename="matrix.jpeg") }}" class="img-fluid rounded mx-auto d-block" alt="Matrix">
+
+        <img src="{{ url_for("static", filename="urgent-important.jpeg") }}" class="img-fluid rounded mx-auto d-block" alt="Matrix">
+
+        <p class="text-center"><span>Diagrams by <a href="https://medium.com/@xebrio" target="_blank">Xebrio</a> on <a href="https://medium.com/xebrio/eisenhower-matrix-the-key-to-productivity-and-time-management-f510cbd808e1" target="_blank">Medium</a></span></p>
+    </div>
+
+{% endblock %}
