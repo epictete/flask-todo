@@ -6,14 +6,32 @@
 
 {% block main %}
 
-    <div class="container">
-        <h1 class="text-center mb-2">The Eisenhower Matrix</h1>
+    <div class="card text-center mb-4">
+        <div class="card-header">
+            <h3>The Eisenhower Matrix</h3>
+        </div>
+        <div class="card-body">
+            <p class="card-text">The diagrams below show you how your todos will be categorized by the app.</p>
 
-        <img src="{{ url_for("static", filename="matrix.jpeg") }}" class="img-fluid rounded mx-auto d-block" alt="Matrix">
+            <p class="card-text">It uses the famous <span class="font-weight-bold">Eisenhower Matrix</span>.</p>
 
-        <img src="{{ url_for("static", filename="urgent-important.jpeg") }}" class="img-fluid rounded mx-auto d-block" alt="Matrix">
+            <p class="card-text">To learn more, feel free to visit the link below.</p>
 
-        <p class="text-center"><span>Diagrams by <a href="https://medium.com/@xebrio" target="_blank">Xebrio</a> on <a href="https://medium.com/xebrio/eisenhower-matrix-the-key-to-productivity-and-time-management-f510cbd808e1" target="_blank">Medium</a></span></p>
+            {% if not session["user_id"] %}
+                <p class="card-text">Please log in to start using the app.</p>
+
+                <p>Enjoy!</p>
+
+                <a href="/login" class="btn btn-primary m-3">Log In</a>
+            {% endif %}
+
+        </div>
     </div>
+
+    <img src="{{ url_for("static", filename="matrix.jpeg") }}" class="img-fluid rounded mx-auto d-block" alt="Matrix">
+
+    <img src="{{ url_for("static", filename="urgent-important.jpeg") }}" class="img-fluid rounded mx-auto d-block" alt="Matrix">
+
+    <p class="text-center"><span>Diagrams by <a href="https://medium.com/@xebrio" target="_blank">Xebrio</a> on <a href="https://medium.com/xebrio/eisenhower-matrix-the-key-to-productivity-and-time-management-f510cbd808e1" target="_blank">Medium</a></span></p>
 
 {% endblock %}

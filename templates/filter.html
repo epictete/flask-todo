@@ -6,27 +6,26 @@
 
 {% block main %}
 
-    <div class="container">
+    <h1 class="text-center mb-5">{{ filter.title() }}</h1>
 
-        <h1 class="text-center mb-5">{{ filter.title() }}</h1>
+    {% if not todos %}
 
-        {% if not todos %}
+        <h4 class="text-center mb-5">Your "{{ filter.title() }}" list is empty.</h4>
 
-            <h4 class="text-center mb-5">Your "{{ filter.title() }}" list is empty.</h4>
+        <img src="{{ url_for("static", filename="empty.jpg") }}" class="img-fluid rounded mx-auto d-block mb-3" alt="Relax">
 
-            <img src="{{ url_for("static", filename="empty.jpg") }}" class="img-fluid rounded mx-auto d-block mb-3" alt="Relax">
+        <p class="text-center">
+            <span>
+                Photo by
+                <a href="https://unsplash.com/@laurensauderstudio?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank">Lauren Sauder</a> on
+                <a href="https://unsplash.com/s/photos/todo?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank">Unsplash</a>
+            </span>
+        </p>
 
-            <p class="text-center">
-                <span>
-                    Photo by
-                    <a href="https://unsplash.com/@laurensauderstudio?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank">Lauren Sauder</a> on
-                    <a href="https://unsplash.com/s/photos/todo?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank">Unsplash</a>
-                </span>
-            </p>
+    {% else %}
 
-        {% else %}
-
-            <table class="table table-striped">
+        <table class="table table-hover">
+            <thead class="thead-light">
                 <tr>
                     <th scope="col" class="col-6">Todo</th>
                     <th scope="col">Due</th>
@@ -35,6 +34,8 @@
                     <th scope="col" class="text-center">Edit</th>
                     <th scope="col" class="text-center">Delete</th>
                 </tr>
+            </thead>
+            <tbody>
                 {% for todo in todos %}
                     <tr>
                         <td scope="row">
@@ -66,10 +67,9 @@
                         </td>
                     </tr>
                 {% endfor %}
-            </table>
+            </tbody>
+        </table>
 
-        {% endif %}
-
-    </div>
+    {% endif %}
 
 {% endblock %}

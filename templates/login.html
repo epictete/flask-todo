@@ -6,14 +6,20 @@
 
 {% block main %}
 
-    <div class="col-md-6 mx-auto">
+    <div class="col-md-6 mx-auto pt-3">
         <div class="card card-body bg-light mt-5">
             <h2>Log In</h2>
             <p>Please fill in your credentials to log in</p>
             <form action="/login" method="post">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name="username">
+                    <input
+                            autofocus
+                            autocomplete="off"
+                            type="text"
+                            class="form-control"
+                            id="username"
+                            name="username">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>

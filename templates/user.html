@@ -1,32 +1,68 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    User Account
+    Account > {{ session["username"] }}
 {% endblock %}
 
 {% block main %}
 
     <div class="col-md-6 mx-auto">
         <div class="card card-body bg-light mt-5">
-            <h2>Manage Your Account</h2>
+            <h3>Password</h3>
             <p>Please fill out this form to update your password</p>
-            <form action="/user/{{ session["user_id"] }}" method="post">
+            <form action="/user" method="post">
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" class="form-control" id="username" name="username" value="{{ user["username"] }}" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">New Password</label>
                     <input type="password" class="form-control" id="password" name="password">
                 </div>
                 <div class="form-group">
-                    <label for="confirm">Confirm Password</label>
+                    <label for="confirm">Confirm New Password</label>
                     <input type="password" class="form-control" id="confirm" name="confirm">
                 </div>
 
                 <div class="row">
                     <div class="col">
-                        <input type="submit" value="Update" class="btn btn-primary btn-block">
+                        <input type="submit" value="Update Password" class="btn btn-primary btn-block">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6 mx-auto">
+        <div class="card card-body bg-light mt-5">
+            <h3>Reset</h3>
+            <p>Please type "RESET" in the input field and click the button below to erase all your todos</p>
+            <p><span class="font-weight-bold">Warning:</span> This is permanent. All your data will be lost!</p>
+            <form action="/reset" method="post">
+                <div class="form-group">
+                    <label for="confirm">Confirmation</label>
+                    <input  autocomplete="off" type="text" class="form-control" id="reset" name="confirm">
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="submit" value="Reset Account" class="btn btn-primary btn-block">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6 mx-auto">
+        <div class="card card-body bg-light mt-5">
+            <h3>Delete</h3>
+            <p>Please type "DELETE" in the input field and click the button below to delete your account</p>
+            <p><span class="font-weight-bold">Warning:</span> This is permanent. All your data will be lost!</p>
+            <form action="/delete_account" method="post">
+                <div class="form-group">
+                    <label for="confirm">Confirmation</label>
+                    <input autocomplete="off" type="text" class="form-control" id="delete" name="confirm">
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="submit" value="Delete Account" class="btn btn-danger btn-block">
                     </div>
                 </div>
             </form>
