@@ -20,6 +20,7 @@
                                     type="text"
                                     name="content"
                                     placeholder="New Todo..."
+
                             >
                         </div>
                         <div class="col-auto mr-2">
@@ -66,44 +67,44 @@
 
     {% if not todos %}
 
-        <h4 class="text-center mb-5">Your Todo list is empty.  Enjoy!</h4>
+        <h4 class="text-center mb-5">Your Todo list is empty. Enjoy!</h4>
 
-        <img src="{{ url_for("static", filename="relax.jpg") }}" class="img-fluid rounded mx-auto d-block mb-3" alt="Relax">
+        <img src="{{ url_for("static", filename="empty.jpg") }}" class="img-fluid rounded mx-auto d-block mb-3" alt="Relax">
 
         <p class="text-center">
             <span>
                 Photo by
-                <a href="https://unsplash.com/@peterconlan?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank">Peter Conlan</a> on
-                <a href="https://unsplash.com/s/photos/enthusiastic?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank">Unsplash</a>
+                <a href="https://unsplash.com/@laurensauderstudio?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank">Lauren Sauder</a> on
+                <a href="https://unsplash.com/s/photos/todo?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank">Unsplash</a>
             </span>
         </p>
 
     {% else %}
 
-        <table class="table table-hover">
+        <table class="table table-hover table-borderless">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col" class="col-6">
-                        {% if sort == "todo_asc" %}
-                            <a href="/sort/{{ "todo_desc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                    <th scope="col" style="width:50%">
+                        {% if sort == "content_asc" %}
+                            <a href="/sort/{{ "index" }}/{{ "content_desc" }}"><i class="fas fa-sort fa-lg"></i></a>
                         {% else %}
-                            <a href="/sort/{{ "todo_asc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                            <a href="/sort/{{ "index" }}/{{ "content_asc" }}"><i class="fas fa-sort fa-lg"></i></a>
                         {% endif %}
                         Todo
                     </th>
                     <th scope="col">
                         {% if sort == "due_asc" %}
-                            <a href="/sort/{{ "due_desc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                            <a href="/sort/{{ "index" }}/{{ "due_desc" }}"><i class="fas fa-sort fa-lg"></i></a>
                         {% else %}
-                            <a href="/sort/{{ "due_asc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                            <a href="/sort/{{ "index" }}/{{ "due_asc" }}"><i class="fas fa-sort fa-lg"></i></a>
                         {% endif %}
                         Due
                     </th>
                     <th scope="col">
                         {% if sort == "created_asc" %}
-                            <a href="/sort/{{ "created_desc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                            <a href="/sort/{{ "index" }}/{{ "created_desc" }}"><i class="fas fa-sort fa-lg"></i></a>
                         {% else %}
-                            <a href="/sort/{{ "created_asc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                            <a href="/sort/{{ "index" }}/{{ "created_asc" }}"><i class="fas fa-sort fa-lg"></i></a>
                         {% endif %}
                         Created
                     </th>
@@ -114,32 +115,26 @@
             </thead>
             <tbody>
                 {% for todo in todos %}
-                    <tr
-                            {% if todo.overdue %}
-                                class="table-danger"
-                            {% else %}
-
-                            {% endif %}
-                    >
+                    <tr>
                         <td scope="row">
                             {% if todo.important %}
                                 {% if todo.urgent %}
-                                    <span class="badge badge-danger mr-1 text-danger">0</span>
+                                    <span class="badge badge-danger mr-1 text-danger">1</span>
                                 {% else %}
-                                    <span class="badge badge-success mr-1 text-success">0</span>
+                                    <span class="badge badge-success mr-1 text-success">2</span>
                                 {% endif %}
                             {% else %}
                                 {% if todo.urgent %}
-                                    <span class="badge badge-warning mr-1 text-warning">0</span>
+                                    <span class="badge badge-warning mr-1 text-warning">3</span>
                                 {% else %}
-                                    <span class="badge badge-primary mr-1 text-primary">0</span>
+                                    <span class="badge badge-primary mr-1 text-primary">4</span>
                                 {% endif %}
                             {% endif %}
                             {{ todo.content }}
                         </td>
                         <td>
                             {% if todo.overdue %}
-                                <span class="text-danger font-weight-bold">{{ todo.due }}</span>
+                                <span class="text-danger font-weight-bold border border-danger rounded p-1">{{ todo.due }}</span>
                             {% else %}
                                 {{ todo.due }}
                             {% endif %}

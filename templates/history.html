@@ -24,34 +24,49 @@
 
     {% else %}
 
-        <table class="table table-striped">
-            <tr>
-                <th scope="col" class="col-6">Todo</th>
-                <th scope="col">Due</th>
-                <th scope="col">Created</th>
-                <th scope="col" class="text-center">Status</th>
-                <th scope="col" class="text-center">Restore</th>
-            </tr>
+        <table class="table table-hover table-borderless">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col" style="width:50%">
+                        {% if sort == "content_asc" %}
+                            <a href="/sort/{{ "history" }}/{{ "content_desc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                        {% else %}
+                            <a href="/sort/{{ "history" }}/{{ "content_asc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                        {% endif %}
+                        Todo
+                    </th>
+                    <th scope="col">
+                        {% if sort == "archived_asc" %}
+                            <a href="/sort/{{ "history" }}/{{ "archived_desc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                        {% else %}
+                            <a href="/sort/{{ "history" }}/{{ "archived_asc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                        {% endif %}
+                        Archived
+                    </th>
+                    <th scope="col" class="text-center">Status</th>
+                    <th scope="col" class="text-center">Restore</th>
+                </tr>
+            </thead>
+        <tbody>
             {% for todo in todos %}
                 <tr>
                     <td scope="row">
                         {% if todo.important %}
                             {% if todo.urgent %}
-                                <span class="badge badge-danger mr-1 text-danger">0</span>
+                                <span class="badge badge-danger mr-1 text-danger">1</span>
                             {% else %}
-                                <span class="badge badge-success mr-1 text-success">0</span>
+                                <span class="badge badge-success mr-1 text-success">2</span>
                             {% endif %}
                         {% else %}
                             {% if todo.urgent %}
-                                <span class="badge badge-warning mr-1 text-warning">0</span>
+                                <span class="badge badge-warning mr-1 text-warning">3</span>
                             {% else %}
-                                <span class="badge badge-primary mr-1 text-primary">0</span>
+                                <span class="badge badge-primary mr-1 text-primary">4</span>
                             {% endif %}
                         {% endif %}
                         {{ todo.content }}
                     </td>
-                    <td>{{ todo.due }}</td>
-                    <td>{{ todo.created.date() }}</td>
+                    <td>{{ todo.archived.date() }}</td>
                     <td class="text-center">
                         {% if todo.done %}
                             <a href=""><i class="fas fa-check"></i></a>
@@ -64,7 +79,27 @@
                     </td>
                 </tr>
             {% endfor %}
+        </tbody>
         </table>
+
+        <div id="clear" class="col-md-6 mx-auto">
+            <div class="card card-body bg-light mt-5 mb-5">
+                <h3>Clear</h3>
+                <p>Please type "CLEAR" in the input field and click the button below to clear your history</p>
+                <p><span class="font-weight-bold">Warning:</span> This is permanent. All your history data will be lost!</p>
+                <form action="/clear" method="post">
+                    <div class="form-group">
+                        <label for="confirm">Confirmation</label>
+                        <input  autocomplete="off" type="text" class="form-control" id="reset" name="confirm">
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="submit" value="Clear History" class="btn btn-primary btn-block">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
     {% endif %}
 

@@ -24,12 +24,33 @@
 
     {% else %}
 
-        <table class="table table-hover">
+        <table class="table table-hover table-borderless">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col" class="col-6">Todo</th>
-                    <th scope="col">Due</th>
-                    <th scope="col">Created</th>
+                    <th scope="col" style="width:50%">
+                        {% if sort == "content_asc" %}
+                            <a href="/sort/{{ filter }}/{{ "content_desc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                        {% else %}
+                            <a href="/sort/{{ filter }}/{{ "content_asc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                        {% endif %}
+                        Todo
+                    </th>
+                    <th scope="col">
+                        {% if sort == "due_asc" %}
+                            <a href="/sort/{{ filter }}/{{ "due_desc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                        {% else %}
+                            <a href="/sort/{{ filter }}/{{ "due_asc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                        {% endif %}
+                        Due
+                    </th>
+                    <th scope="col">
+                        {% if sort == "created_asc" %}
+                            <a href="/sort/{{ filter }}/{{ "created_desc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                        {% else %}
+                            <a href="/sort/{{ filter }}/{{ "created_asc" }}"><i class="fas fa-sort fa-lg"></i></a>
+                        {% endif %}
+                        Created
+                    </th>
                     <th scope="col" class="text-center">Done</th>
                     <th scope="col" class="text-center">Edit</th>
                     <th scope="col" class="text-center">Delete</th>
@@ -54,7 +75,13 @@
                             {% endif %}
                             {{ todo.content }}
                         </td>
-                        <td>{{ todo.due }}</td>
+                        <td>
+                            {% if todo.overdue %}
+                                <span class="text-danger font-weight-bold border border-danger rounded p-1">{{ todo.due }}</span>
+                            {% else %}
+                                {{ todo.due }}
+                            {% endif %}
+                        </td>
                         <td>{{ todo.created.date() }}</td>
                         <td class="text-center">
                             <a href="/done/{{ todo.id }}"><i class="far fa-square"></i></a>
