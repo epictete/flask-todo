@@ -2,18 +2,16 @@ from flask import flash, render_template, request, redirect, session
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from db import app, db, User, Todo
-from helpers import login_required, dates, count, define_key
+from helpers import login_required, define_key
 
 
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
     user_id = session["user_id"]
-    dates()
-    count()
 
     if request.method == "GET":
-        return redirect("/sort/index/due_asc")
+        return redirect("/sort/index/created_desc")
     else:
         todo_content = request.form["content"]
         todo_important = True if ("important" in request.form) else False
@@ -111,13 +109,13 @@ def check(id):
     return redirect("/")
 
 
-@app.route("/update/<int:id>", methods=["GET", "POST"])
+@app.route("/update/<int:id>/<string:filter>", methods=["GET", "POST"])
 @login_required
-def update(id):
+def update(id, filter):
     todo_to_update = Todo.query.get_or_404(id)
 
     if request.method == "GET":
-        return render_template("update.html", todo=todo_to_update)
+        return render_template("update.html", todo=todo_to_update, filter=filter)
     else:
         todo_to_update.content = request.form["content"]
         todo_to_update.important = True if ("important" in request.form) else False
@@ -129,7 +127,7 @@ def update(id):
 
         flash("Updated!")
 
-        return redirect("/")
+        return redirect(f"/sort/{filter}/due_asc")
 
 
 @app.route("/restore/<int:id>")

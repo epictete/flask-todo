@@ -4,15 +4,6 @@ from datetime import date, timedelta
 from db import db, Todo
 
 
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if "user_id" not in session:
-            return redirect("/login")
-        return f(*args, **kwargs)
-    return decorated_function
-
-
 def dates():
     user_id = session["user_id"]
     todos = Todo.query.filter(Todo.user_id == user_id, Todo.due != None).all()
@@ -22,6 +13,7 @@ def dates():
             todo.urgent = True
 
         if (todo.due - date.today()) < timedelta(days=0):
+            todo.important = True
             todo.overdue = True
         else:
             todo.overdue = False
@@ -64,6 +56,17 @@ def count():
             Todo.user_id == user_id,
             Todo.archived != None
         ).count()
+
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "user_id" not in session:
+            return redirect("/login")
+        dates()
+        count()
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 def define_key(sort):

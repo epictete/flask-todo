@@ -40,8 +40,8 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link" data-toggle="dropdown" href="" role="button">
-                                <button type="button" class="btn btn-outline-secondary dropdown-toggle" {% if not session.history %}disabled{% endif %}>
+                            <a class="nav-link {% if not session.history %}disabled{% endif %}" data-toggle="dropdown" href="" role="button">
+                                <button type="button" class="btn btn-outline-secondary dropdown-toggle"{% if not session.history %}disabled{% endif %}>
                                     History
                                 </button>
                             </a>
@@ -53,59 +53,43 @@
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="/sort/{{ "do" }}/{{ "due_asc" }}">
-                                {% if not session.do %}
-                                    <button type="button" class="btn btn-outline-danger" disabled>
-                                        Do
-                                    </button>
-                                {% else %}
-                                    <button type="button" class="btn btn-outline-danger">
-                                        Do
+                             <a class="nav-link {% if not session.do %}disabled{% endif %}" href="/sort/{{ "do" }}/{{ "created_desc" }}">
+                                <button type="button" class="btn btn-outline-danger" {% if not session.do %}disabled{% endif %}>
+                                    Do
+                                    {% if session.do %}
                                         <span class="badge badge-danger">{{ session.do }}</span>
-                                    </button>
-                                {% endif %}
+                                    {% endif %}
+                                </button>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/sort/{{ "plan" }}/{{ "due_asc" }}">
-                                {% if not session.plan %}
-                                    <button type="button" class="btn btn-outline-success" disabled>
-                                        Plan
-                                    </button>
-                                {% else %}
-                                    <button type="button" class="btn btn-outline-success">
-                                        Plan
+                            <a class="nav-link {% if not session.plan %}disabled{% endif %}" href="/sort/{{ "plan" }}/{{ "created_desc" }}">
+                                <button type="button" class="btn btn-outline-success" {% if not session.plan %}disabled{% endif %}>
+                                    Plan
+                                    {% if session.plan %}
                                         <span class="badge badge-success">{{ session.plan }}</span>
-                                    </button>
-                                {% endif %}
+                                    {% endif %}
+                                </button>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/sort/{{ "delegate" }}/{{ "due_asc" }}">
-                                {% if not session.delegate %}
-                                    <button type="button" class="btn btn-outline-warning" disabled>
-                                        Delegate
-                                    </button>
-                                {% else %}
-                                    <button type="button" class="btn btn-outline-warning">
-                                        Delegate
+                            <a class="nav-link {% if not session.delegate %}disabled{% endif %}" href="/sort/{{ "delegate" }}/{{ "created_desc" }}">
+                                <button type="button" class="btn btn-outline-warning" {% if not session.delegate %}disabled{% endif %}>
+                                    Delegate
+                                    {% if session.delegate %}
                                         <span class="badge badge-warning">{{ session.delegate }}</span>
-                                    </button>
-                                {% endif %}
+                                    {% endif %}
+                                </button>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/sort/{{ "eliminate" }}/{{ "due_asc" }}">
-                                {% if not session.eliminate %}
-                                    <button type="button" class="btn btn-outline-primary" disabled>
-                                        Eliminate
-                                    </button>
-                                {% else %}
-                                    <button type="button" class="btn btn-outline-primary">
-                                        Eliminate
+                            <a class="nav-link {% if not session.eliminate %}disabled{% endif %}" href="/sort/{{ "eliminate" }}/{{ "created_desc" }}">
+                                <button type="button" class="btn btn-outline-primary" {% if not session.eliminate %}disabled{% endif %}>
+                                    Eliminate
+                                    {% if session.eliminate %}
                                         <span class="badge badge-primary">{{ session.eliminate }}</span>
-                                    </button>
-                                {% endif %}
+                                    {% endif %}
+                                </button>
                             </a>
                         </li>
                     </ul>
