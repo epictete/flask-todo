@@ -109,9 +109,9 @@ def check(id):
     return redirect("/")
 
 
-@app.route("/update/<int:id>/<string:filter>", methods=["GET", "POST"])
+@app.route("/update/<int:id>", methods=["GET", "POST"])
 @login_required
-def update(id, filter):
+def update(id):
     todo_to_update = Todo.query.get_or_404(id)
 
     if request.method == "GET":
@@ -127,7 +127,7 @@ def update(id, filter):
 
         flash("Updated!")
 
-        return redirect(f"/sort/{filter}/due_asc")
+        return redirect("/")
 
 
 @app.route("/restore/<int:id>")

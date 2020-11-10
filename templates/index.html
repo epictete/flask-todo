@@ -67,7 +67,7 @@
 
     {% if not todos %}
 
-        <h4 class="text-center mb-5">Your Todo list is empty. Enjoy!</h4>
+        <h4 class="text-center mb-5">Your Todo list is empty. Well done !</h4>
 
         <img src="{{ url_for("static", filename="empty.jpg") }}" class="img-fluid rounded mx-auto d-block mb-3" alt="Relax">
 
@@ -144,7 +144,7 @@
                             <a href="/done/{{ todo.id }}"><i class="far fa-square"></i></a>
                         </td>
                         <td class="text-center">
-                            <a href="/update/{{ todo.id }}/{{ "index" }}"><i class="fas fa-edit"></i></a>
+                            <a href="/update/{{ todo.id }}"><i class="fas fa-edit"></i></a>
                         </td>
                         <td class="text-center">
                             <a href="/delete/{{ todo.id }}"><i class="fas fa-trash"></i></a>
