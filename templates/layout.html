@@ -23,7 +23,6 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/">
-                <!--<span class="text-danger">T</span><span class="text-success">O</span><span class="text-warning">D</span><span class="text-primary">O</span><span class="text-dark"> App</span>-->
                 <img src="/static/logo.jpg" width="37" height="37" alt="Logo" loading="lazy">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -142,12 +141,12 @@
             </div>
         </nav>
 
-        <main class="container mt-5 mb-5">
             {% if get_flashed_messages() %}
                 <div class="alert alert-primary text-center">
                     {{ get_flashed_messages() | join(" ") }}
                 </div>
             {% endif %}
+        <main class="container mt-5 mb-5">
 
             {% block main %}{% endblock %}
         </main>

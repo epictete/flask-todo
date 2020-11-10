@@ -6,25 +6,27 @@
 
 {% block main %}
 
-    <div class="card text-center mb-4">
-        <div class="card-header">
-            <h3 class="text-secondary">The Eisenhower Matrix</h3>
-        </div>
-        <div class="card-body">
-            <p class="card-text">The diagrams below show you how your todos will be categorized by the app.</p>
+    <div class="col-md-6 mx-auto pt-3">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="text-secondary">The Eisenhower Matrix</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-text">The diagrams below show you how your todos will be categorized by the app.</p>
 
-            <p class="card-text">It uses the famous <span class="font-weight-bold">Eisenhower Matrix</span>.</p>
+                <p class="card-text">It uses the famous <span class="font-weight-bold">Eisenhower Matrix</span>.</p>
 
-            <p class="card-text">To learn more, feel free to visit the link below.</p>
+                <p class="card-text">To learn more, feel free to visit the link below.</p>
 
-            {% if not session["user_id"] %}
-                <p class="card-text">Please log in to start using the app.</p>
+                {% if not session["user_id"] %}
+                    <p class="card-text">Please log in to start using the app.</p>
 
-                <p>Enjoy!</p>
+                    <p>Enjoy!</p>
 
-                <a href="/login" class="btn btn-primary m-3">Log In</a>
-            {% endif %}
+                    <a href="/login" class="btn btn-primary">Log In</a>
+                {% endif %}
 
+            </div>
         </div>
     </div>
 

@@ -1,4 +1,4 @@
-# Flask Todo App
+# Todo Matrix App
 
 <p align="center" margin-top="30">
   <img width="100" src="./static/logo.jpg" alt="Logo">
