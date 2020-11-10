@@ -22,6 +22,13 @@ def index():
             flash("Please provide a content.")
             return redirect("/")
 
+        if todo_due:
+            try:
+                todo_due = datetime.strptime(request.form["due"], "%Y-%m-%d")
+            except ValueError:
+                flash("Please use a valid date format")
+                redirect("/")
+
         new_todo = Todo(
             content=todo_content,
             important=todo_important,
@@ -122,6 +129,13 @@ def update(id):
         todo_to_update.urgent = True if ("urgent" in request.form) else False
         todo_to_update.due = datetime.strptime(request.form["due"], "%Y-%m-%d") if (request.form["due"] != "") else None
         todo_to_update.overdue = False if (request.form["due"] == "") else todo_to_update.overdue
+
+        if todo_to_update.due:
+            try:
+                todo_to_update.due = datetime.strptime(request.form["due"], "%Y-%m-%d")
+            except ValueError:
+                flash("Please use a valid date format")
+                redirect("/")
 
         db.session.commit()
 
