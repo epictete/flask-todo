@@ -35,7 +35,7 @@ Tips and suggestions are more than welcome, the goal is to learn and improve :ro
 
 -   Frontend with HTML5 and [Bootstrap](https://getbootstrap.com/)
 -   Backend with [Python](https://www.python.org/) using the [Flask](https://flask.palletsprojects.com/en/1.1.x/) microframework
--   [SQLite](https://sqlite.org/index.html) database using the [SQLAlchemy](https://www.sqlalchemy.org/) ORM
+-   [PostgreSQL](https://www.postgresql.org/) database using the [SQLAlchemy](https://www.sqlalchemy.org/) ORM
 -   Password hashing using [Werkzeug Security Helpers](https://werkzeug.palletsprojects.com/en/1.0.x/utils/#module-werkzeug.security)
 -   Use of the built-in [Login Required Decorator](https://flask.palletsprojects.com/en/1.1.x/patterns/viewdecorators/) to protect the routes
 -   Use of [Font Awesome](https://fontawesome.com/) for the icons
