@@ -4,12 +4,19 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://ndbgtuwzzjccet:89d9ed7535668e1d6115b30ac32345ddea3a215c20b11f36823b1113a05dd3ae@ec2-3-220-23-212.compute-1.amazonaws.com:5432/d9eab390a0icrm"
+
+ENV = "prod"
+
+if ENV == "dev":
+    app.debug = True
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
+else:
+    app.debug = False
+    app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://kzxthmhxusewtx:584aec8bab830632973fc663d29e7847d8bc2b1d3879d62cd909d55b6301f5d1@ec2-34-206-252-187.compute-1.amazonaws.com:5432/dc52ammeo2tbrd"
+
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
-
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
