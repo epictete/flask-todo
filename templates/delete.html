@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Delete > {{ session["username"] }}
+{% endblock %}
+
+{% block main %}
+
+    <div id="delete" class="col-md-6 mx-auto">
+        <div class="card card-body bg-light mt-5">
+            <h3>Delete</h3>
+            <p>Please type "DELETE" in the input field and click the button below to delete your account</p>
+            <p><span class="font-weight-bold">Warning:</span> This is permanent. All your data will be lost!</p>
+            <form action="/delete_account" method="post">
+                <div class="form-group">
+                    <label for="confirm">Confirmation</label>
+                    <input autocomplete="off" type="text" class="form-control" id="delete" name="confirm">
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="submit" value="Delete Account" class="btn btn-danger btn-block">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

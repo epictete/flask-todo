@@ -82,25 +82,6 @@
         </tbody>
         </table>
 
-        <div id="clear" class="col-md-6 mx-auto">
-            <div class="card card-body bg-light mt-5 mb-5">
-                <h3>Clear</h3>
-                <p>Please type "CLEAR" in the input field and click the button below to clear your history</p>
-                <p><span class="font-weight-bold">Warning:</span> This is permanent. All your history data will be lost!</p>
-                <form action="/clear" method="post">
-                    <div class="form-group">
-                        <label for="confirm">Confirmation</label>
-                        <input  autocomplete="off" type="text" class="form-control" id="reset" name="confirm">
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <input type="submit" value="Clear History" class="btn btn-primary btn-block">
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
     {% endif %}
 
 {% endblock %}

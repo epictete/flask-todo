@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Reset > {{ session["username"] }}
+{% endblock %}
+
+{% block main %}
+
+    <div id="reset" class="col-md-6 mx-auto">
+        <div class="card card-body bg-light mt-5">
+            <h3>Reset</h3>
+            <p>Please type "RESET" in the input field and click the button below to erase all your todos</p>
+            <p><span class="font-weight-bold">Warning:</span> This is permanent. All your data will be lost!</p>
+            <form action="/reset" method="post">
+                <div class="form-group">
+                    <label for="confirm">Confirmation</label>
+                    <input  autocomplete="off" type="text" class="form-control" id="reset" name="confirm">
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="submit" value="Reset Account" class="btn btn-primary btn-block">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

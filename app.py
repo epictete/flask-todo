@@ -16,16 +16,11 @@ def index():
         todo_content = request.form["content"]
         todo_important = True if ("important" in request.form) else False
         todo_urgent = True if ("urgent" in request.form) else False
+        todo_due = datetime.strptime(request.form["due"], "%Y-%m-%d") if (request.form["due"] != "") else None
 
         if not todo_content:
             flash("Please provide a content.")
             return redirect("/")
-
-        try:
-            todo_due = datetime.strptime(request.form["due"], "%Y-%m-%d") if (request.form["due"] != "") else None
-        except ValueError:
-            flash("Please use a valid date format")
-            redirect("/")
 
         new_todo = Todo(
             content=todo_content,
@@ -126,12 +121,7 @@ def update(id):
         todo_to_update.important = True if ("important" in request.form) else False
         todo_to_update.urgent = True if ("urgent" in request.form) else False
         todo_to_update.overdue = False if (request.form["due"] == "") else todo_to_update.overdue
-
-        try:
-            todo_to_update.due = datetime.strptime(request.form["due"], "%Y-%m-%d") if (request.form["due"] != "") else None
-        except ValueError:
-            flash("Please use a valid date format")
-            redirect(f"/update/{id}")
+        todo_to_update.due = datetime.strptime(request.form["due"], "%Y-%m-%d") if (request.form["due"] != "") else None
 
         db.session.commit()
 
@@ -223,14 +213,14 @@ def login():
         return redirect("/")
 
 
-@app.route("/user", methods=["GET", "POST"])
+@app.route("/password", methods=["GET", "POST"])
 @login_required
 def user():
     user_id = session["user_id"]
     user_to_update = User.query.get_or_404(user_id)
 
     if request.method == "GET":
-        return render_template("user.html", user=user_to_update)
+        return render_template("password.html", user=user_to_update)
     else:
         password = request.form["password"]
         confirm = request.form["confirm"]
@@ -238,10 +228,10 @@ def user():
 
         if not password or not confirm:
             flash("Please fill in both fields")
-            return redirect("/user")
+            return redirect("/password")
         elif password != confirm:
             flash("Passwords do not match")
-            return redirect("/user")
+            return redirect("/password")
 
         user_to_update.password = hash
 
@@ -249,7 +239,7 @@ def user():
 
         flash("Password Updated!")
 
-        return redirect("/user")
+        return redirect("/")
 
 
 @app.route("/logout")
@@ -261,73 +251,82 @@ def logout():
     return redirect("/")
 
 
-@app.route("/reset", methods=["POST"])
+@app.route("/reset", methods=["GET", "POST"])
 @login_required
 def reset():
     user_id = session["user_id"]
 
-    if request.form["confirm"] != "RESET":
-        flash("Please type in the correct phrase")
-        return redirect("/user")
+    if request.method == "GET":
+        return render_template("reset.html")
+    else:
+        if request.form["confirm"] != "RESET":
+            flash("Please type in the correct phrase")
+            return redirect("/reset")
 
-    todos = Todo.query.filter(Todo.user_id == user_id).all()
+        todos = Todo.query.filter(Todo.user_id == user_id).all()
 
-    for todo in todos:
-        db.session.delete(todo)
+        for todo in todos:
+            db.session.delete(todo)
 
-    db.session.commit()
+        db.session.commit()
 
-    flash("Reset Completed!")
+        flash("Reset Completed!")
 
-    return redirect("/")
+        return redirect("/")
 
 
-@app.route("/clear", methods=["POST"])
+@app.route("/clear", methods=["GET", "POST"])
 @login_required
 def clear():
     user_id = session["user_id"]
 
-    if request.form["confirm"] != "CLEAR":
-        flash("Please type in the correct phrase")
-        return redirect("/sort/history/archived_desc")
+    if request.method == "GET":
+        return render_template("clear.html")
+    else:
+        if request.form["confirm"] != "CLEAR":
+            flash("Please type in the correct phrase")
+            return redirect("/clear")
 
-    todos = Todo.query.filter(Todo.user_id == user_id, Todo.archived).all()
+        todos = Todo.query.filter(Todo.user_id == user_id, Todo.archived).all()
 
-    for todo in todos:
-        db.session.delete(todo)
+        for todo in todos:
+            db.session.delete(todo)
 
-    db.session.commit()
+        db.session.commit()
 
-    flash("Clear Completed!")
+        flash("Clear Completed!")
 
-    return redirect("/")
+        return redirect("/")
 
 
-@app.route("/delete_account", methods=["POST"])
+@app.route("/delete_account", methods=["GET", "POST"])
 @login_required
 def delete_account():
     user_id = session["user_id"]
 
-    if request.form["confirm"] != "DELETE":
-        flash("Please type in the correct phrase")
-        return redirect("/user")
+    if request.method == "GET":
+        return render_template("delete.html")
+    else:
+        if request.form["confirm"] != "DELETE":
+            flash("Please type in the correct phrase")
+            return redirect("/delete_account")
 
-    todos = Todo.query.filter(Todo.user_id == user_id).all()
+        todos = Todo.query.filter(Todo.user_id == user_id).all()
 
-    for todo in todos:
-        db.session.delete(todo)
+        for todo in todos:
+            db.session.delete(todo)
 
-    db.session.commit()
+        db.session.commit()
 
-    user_to_delete = User.query.filter(User.id == user_id).first()
-    db.session.delete(user_to_delete)
-    db.session.commit()
+        user_to_delete = User.query.filter(User.id == user_id).first()
+        db.session.delete(user_to_delete)
+        db.session.commit()
 
-    session.clear()
-    
-    flash("Account Deleted!")
+        session.clear()
 
-    return redirect("/register")
+        flash("Account Deleted!")
+
+        return redirect("/register")
 
 
 if __name__ == "__main__":
