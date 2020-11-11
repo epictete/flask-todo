@@ -1,6 +1,6 @@
 from functools import wraps
 from flask import session, redirect
-from datetime import date, timedelta
+from datetime import datetime, date, timedelta
 from db import db, Todo
 
 
@@ -88,3 +88,14 @@ def define_key(sort):
         key = Todo.archived.desc()
 
     return key
+
+
+def validate(date_text):
+    if date_text == "":
+        return True
+    else:
+        try:
+            datetime.strptime(date_text, '%Y-%m-%d')
+            return True
+        except ValueError:
+            return False

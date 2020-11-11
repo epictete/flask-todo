@@ -2,7 +2,7 @@ from flask import flash, render_template, request, redirect, session
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from db import app, db, User, Todo
-from helpers import login_required, define_key
+from helpers import login_required, define_key, validate
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -16,11 +16,16 @@ def index():
         todo_content = request.form["content"]
         todo_important = True if ("important" in request.form) else False
         todo_urgent = True if ("urgent" in request.form) else False
-        todo_due = datetime.strptime(request.form["due"], "%Y-%m-%d") if (request.form["due"] != "") else None
 
         if not todo_content:
             flash("Please provide a content.")
             return redirect("/")
+
+        if not validate(request.form["due"]):
+            flash("Please provide a valid date.")
+            return redirect("/")
+
+        todo_due = datetime.strptime(request.form["due"], "%Y-%m-%d") if (request.form["due"] != "") else None
 
         new_todo = Todo(
             content=todo_content,
@@ -120,8 +125,13 @@ def update(id):
         todo_to_update.content = request.form["content"]
         todo_to_update.important = True if ("important" in request.form) else False
         todo_to_update.urgent = True if ("urgent" in request.form) else False
-        todo_to_update.overdue = False if (request.form["due"] == "") else todo_to_update.overdue
+
+        if not validate(request.form["due"]):
+            flash("Please provide a valid date.")
+            return redirect(f"/update/{id}")
+
         todo_to_update.due = datetime.strptime(request.form["due"], "%Y-%m-%d") if (request.form["due"] != "") else None
+        todo_to_update.overdue = False if (request.form["due"] == "") else todo_to_update.overdue
 
         db.session.commit()
 
@@ -287,7 +297,7 @@ def clear():
             flash("Please type in the correct phrase")
             return redirect("/clear")
 
-        todos = Todo.query.filter(Todo.user_id == user_id, Todo.archived).all()
+        todos = Todo.query.filter(Todo.user_id == user_id, Todo.archived != None ).all()
 
         for todo in todos:
             db.session.delete(todo)
